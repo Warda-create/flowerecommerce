@@ -6,7 +6,7 @@ import AnnouncementBar from "@/components/layout/AnnouncementBar";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 
-import "@/styles/globals.css";
+import "../styles/globals.css";
 
 const lato = Inter({
   subsets: ["latin"],
