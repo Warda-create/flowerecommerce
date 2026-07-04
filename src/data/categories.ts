@@ -1,0 +1,98 @@
+// src/data/categories.ts
+import { Category } from "@/types";
+
+export const categories: Category[] = [
+  {
+    id: "1",
+    name: "Roses",
+    slug: "roses",
+    description: "Classic and romantic, our roses are sourced from the finest farms",
+    image: "/images/products/4.jpg",
+    productCount: 8,
+    featured: true,
+  },
+  {
+    id: "2",
+    name: "Mixed Bouquets",
+    slug: "mixed-bouquets",
+    description: "Curated combinations that capture every mood and season",
+    image: "/images/products/24.jpg",
+    productCount: 10,
+    featured: true,
+  },
+  {
+    id: "3",
+    name: "Peonies",
+    slug: "peonies",
+    description: "The queen of flowers — lush, romantic, and utterly beautiful",
+    image: "/images/products/16.jpg",
+    productCount: 4,
+    featured: true,
+  },
+  {
+    id: "4",
+    name: "Sunflowers",
+    slug: "sunflowers",
+    description: "Bright, cheerful, and full of summer energy",
+    image: "/images/products/18.jpg",
+    productCount: 3,
+    featured: true,
+  },
+  {
+    id: "5",
+    name: "Premium Collections",
+    slug: "premium-collections",
+    description: "Our most exclusive and luxurious arrangements",
+    image: "/images/products/22.jpg",
+    productCount: 5,
+    featured: true,
+  },
+  {
+    id: "6",
+    name: "Wildflowers",
+    slug: "wildflowers",
+    description: "Natural, free-spirited beauty straight from the meadow",
+    image: "/images/categories/76.jpg",
+    productCount: 3,
+    featured: false,
+  },
+  {
+    id: "7",
+    name: "Wedding",
+    slug: "wedding",
+    description: "For the most important day of your life",
+    image: "/images/occasions/39.jpg",
+    productCount: 4,
+    featured: false,
+  },
+  {
+    id: "8",
+    name: "Plants",
+    slug: "plants",
+    description: "Living gifts that keep on growing",
+    image: "/images/categories/84.jpg",
+    productCount: 4,
+    featured: true,
+  },
+  {
+    id: "9",
+    name: "Dried Flowers",
+    slug: "dried-flowers",
+    description: "Timeless beauty that lasts forever",
+    image: "/images/categories/86.jpg",
+    productCount: 2,
+    featured: false,
+  },
+  {
+    id: "10",
+    name: "Gift Boxes",
+    slug: "gift-boxes",
+    description: "Beautifully presented arrangements in luxury boxes",
+    image: "/images/categories/89.jpg",
+    productCount: 3,
+    featured: false,
+  },
+];
+
+export const getFeaturedCategories = (): Category[] =>
+  categories.filter((c) => c.featured);
