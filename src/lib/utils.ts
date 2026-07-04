@@ -62,14 +62,18 @@ export function calculateDiscount(
   return Math.round(((original - discounted) / original) * 100);
 }
 
-export function debounce<T extends (...args: unknown[]) => unknown>(
+export function debounce<T extends (...args: any[]) => void>(
   func: T,
   wait: number
 ): (...args: Parameters<T>) => void {
   let timeout: ReturnType<typeof setTimeout>;
-  return function (...args: Parameters<T>) {
+
+  return (...args: Parameters<T>) => {
     clearTimeout(timeout);
-    timeout = setTimeout(() => func(...args), wait);
+
+    timeout = setTimeout(() => {
+      func(...args);
+    }, wait);
   };
 }
 

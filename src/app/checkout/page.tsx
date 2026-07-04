@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect} from "react";
 import { useRouter } from "next/navigation";
 import { useForm, FormProvider } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -64,10 +64,15 @@ export default function CheckoutPage() {
     },
   });
 
+  useEffect(() => {
   if (items.length === 0 && !orderPlaced) {
     router.push("/cart");
-    return null;
   }
+}, [items.length, orderPlaced, router]);
+
+if (items.length === 0 && !orderPlaced) {
+  return null;
+}
 
   const onSubmit = async (data: FormData) => {
     setIsSubmitting(true);
