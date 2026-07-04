@@ -1,36 +1,84 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🌸 Flower E-Commerce Frontend (Next.js)
 
-## Getting Started
+## 🚀 Live Project
+https://flowerecommerce-r3r27zkhx-warda-creates-projects.vercel.app/
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 📌 Internship Overview
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+This project was developed as part of an internship focused on improving real-world frontend development skills using modern technologies like Next.js, TypeScript, and Tailwind CSS.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+During this internship, I learned how to:
+- Build a complete eCommerce frontend from scratch
+- Structure a large-scale Next.js project using App Router
+- Create reusable and scalable UI components
+- Manage state using Zustand
+- Implement responsive and mobile-first design
+- Work with real-world folder architecture
+- Handle routing, layouts, and dynamic pages
+- Improve debugging and deployment skills using Vercel
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+This internship helped me understand how professional frontend applications are structured and how production-ready code is written and deployed.
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 🛠️ Tech Stack
+- Next.js (App Router)
+- TypeScript
+- Tailwind CSS
+- Zustand (State Management)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 📂 Project Structure
+src/
+├── app/
+├── components/
+├── data/
+├── hooks/
+├── lib/
+├── services/
+├── store/
+├── styles/
+├── types/
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🧩 Features Implemented
+- Product listing & filtering
+- Product detail page
+- Shopping cart system
+- Wishlist functionality
+- Checkout UI flow
+- Search functionality
+- Responsive design
+- Smooth animations
+- Reusable components
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## 🎯 Internship Learning Outcomes
+- Real-world eCommerce UI development
+- Component-based architecture
+- State management patterns
+- API-ready frontend structure
+- Debugging build & deployment issues
+- Git & GitHub workflow
+- Vercel deployment pipeline
+
+---
+
+## 🚀 Deployment
+Live Site:
+https://flowerecommerce-r3r27zkhx-warda-creates-projects.vercel.app/
+
+---
+
+## 👩‍💻 Developer
+Warda Akhtar
+
+---
+
+## 📄 Note
+This project is part of an internship learning experience focused on improving practical frontend development skills and building production-level UI applications.
