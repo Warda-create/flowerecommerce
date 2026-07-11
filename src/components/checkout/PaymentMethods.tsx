@@ -24,21 +24,21 @@ export default function PaymentMethods() {
 
   return (
     <div className="bg-white rounded-3xl shadow-soft p-6 border border-cream-50">
-      <div className="flex items-center gap-3 mb-6">
-        <div className="w-8 h-8 rounded-full bg-blush-100 flex items-center justify-center">
+      <div className="flex flex-wrap items-center gap-3 mb-6">
+        <div className="w-8 h-8 rounded-full bg-blush-100 flex items-center justify-center shrink-0">
           <span className="font-display font-bold text-sm text-blush-700">4</span>
         </div>
         <h2 className="font-display text-lg font-semibold text-sage-900">
           Payment Method
         </h2>
-        <div className="ml-auto flex items-center gap-1.5 text-xs font-body text-sage-500">
+        <div className="sm:ml-auto flex items-center gap-1.5 text-xs font-body text-sage-500">
           <Lock className="w-3.5 h-3.5 text-green-500" />
           Secure & encrypted
         </div>
       </div>
 
       {/* Method selector */}
-      <div className="grid grid-cols-3 gap-3 mb-6">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-6">
         {paymentMethods.map((method) => (
           <button
             key={method.id}

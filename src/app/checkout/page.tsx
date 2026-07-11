@@ -5,9 +5,13 @@ import { useRouter } from "next/navigation";
 import { useForm, FormProvider } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { CheckCircle, ArrowRight } from "lucide-react";
 import { useCartStore } from "@/store/cartStore";
+import { useOrderStore } from "@/store/orderStore";
+import { useAuthStore } from "@/store/authStore";
+import { Order, OrderItem } from "@/types";
+import { DELIVERY_SLOTS } from "@/lib/constants";
 import CustomerInfoForm from "@/components/checkout/CustomerInfoForm";
 import ShippingForm from "@/components/checkout/ShippingForm";
 import DeliveryDatePicker from "@/components/checkout/DeliveryDatePicker";
@@ -15,7 +19,6 @@ import PaymentMethods from "@/components/checkout/PaymentMethods";
 import OrderSummary from "@/components/checkout/OrderSummary";
 import { Button } from "@/components/common/Button";
 import Breadcrumb from "@/components/common/Breadcrumb";
-import toast from "react-hot-toast";
 
 const schema = z.object({
   customer: z.object({
@@ -53,7 +56,17 @@ export default function CheckoutPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [orderPlaced, setOrderPlaced] = useState(false);
   const [orderNumber, setOrderNumber] = useState("");
-  const { items, clearCart } = useCartStore();
+  const {
+    items,
+    clearCart,
+    getSubtotal,
+    getDiscount,
+    getShipping,
+    getTax,
+    getTotal,
+  } = useCartStore();
+  const addOrder = useOrderStore((s) => s.addOrder);
+  const { user } = useAuthStore();
   const router = useRouter();
 
   const methods = useForm<FormData>({
@@ -78,6 +91,57 @@ if (items.length === 0 && !orderPlaced) {
     setIsSubmitting(true);
     await new Promise((r) => setTimeout(r, 1800));
     const num = `FS-${Date.now().toString(36).toUpperCase()}-${Math.random().toString(36).slice(2, 6).toUpperCase()}`;
+    const now = new Date().toISOString();
+
+    const shippingAddress = {
+      id: `addr-${Date.now()}`,
+      label: "Shipping",
+      firstName: data.shipping.firstName,
+      lastName: data.shipping.lastName,
+      street: data.shipping.street,
+      city: data.shipping.city,
+      state: data.shipping.state,
+      zipCode: data.shipping.zipCode,
+      country: "United States",
+      phone: data.shipping.phone,
+      isDefault: false,
+    };
+
+    const orderItems: OrderItem[] = items.map((item, index) => ({
+      id: `item-${Date.now()}-${index}`,
+      productId: item.productId,
+      product: item.product,
+      quantity: item.quantity,
+      selectedSize: item.selectedSize,
+      unitPrice: item.selectedSize.price,
+      total: item.selectedSize.price * item.quantity,
+    }));
+
+    const slot = DELIVERY_SLOTS.find((s) => s.id === data.deliverySlot);
+
+    const order: Order = {
+      id: `ord-${Date.now()}`,
+      orderNumber: num,
+      userId: user?.id || "guest",
+      items: orderItems,
+      status: "confirmed",
+      shippingAddress,
+      billingAddress: shippingAddress,
+      deliveryDate: data.deliveryDate,
+      deliveryTimeSlot: slot?.timeRange || data.deliverySlot,
+      giftMessage: data.giftMessage,
+      subtotal: getSubtotal(),
+      shippingCost: getShipping(),
+      discount: getDiscount(),
+      tax: getTax(),
+      total: getTotal(),
+      paymentMethod: data.paymentMethod,
+      paymentStatus: "paid",
+      createdAt: now,
+      updatedAt: now,
+    };
+
+    addOrder(order);
     setOrderNumber(num);
     clearCart();
     setOrderPlaced(true);
@@ -103,7 +167,7 @@ if (items.length === 0 && !orderPlaced) {
           </p>
           <p className="font-body text-sm text-sage-500 mb-2">
             Order number:{" "}
-            <span className="font-mono font-bold text-sage-800">{orderNumber}</span>
+            <span className="font-mono font-bold text-sage-800 break-all">{orderNumber}</span>
           </p>
           <p className="font-body text-sm text-sage-500 mb-8">
             A confirmation email has been sent to your inbox.
@@ -112,8 +176,9 @@ if (items.length === 0 && !orderPlaced) {
             <Button
               variant="luxury"
               size="lg"
-              onClick={() => router.push(`/track?order=${orderNumber}`)}
+              onClick={() => router.push(`/order-tracking?order=${orderNumber}`)}
               rightIcon={<ArrowRight className="w-4 h-4" />}
+              className="w-full sm:w-auto"
             >
               Track My Order
             </Button>
@@ -121,6 +186,7 @@ if (items.length === 0 && !orderPlaced) {
               variant="outline"
               size="lg"
               onClick={() => router.push("/shop")}
+              className="w-full sm:w-auto"
             >
               Continue Shopping
             </Button>
@@ -148,7 +214,7 @@ if (items.length === 0 && !orderPlaced) {
         <form onSubmit={methods.handleSubmit(onSubmit)}>
           <div className="grid lg:grid-cols-3 gap-8">
             {/* Form sections */}
-            <div className="lg:col-span-2 space-y-6">
+            <div className="lg:col-span-2 space-y-6 min-w-0">
               <CustomerInfoForm />
               <ShippingForm />
               <DeliveryDatePicker />
@@ -168,7 +234,7 @@ if (items.length === 0 && !orderPlaced) {
             </div>
 
             {/* Order summary */}
-            <div>
+            <div className="min-w-0">
               <OrderSummary />
             </div>
           </div>

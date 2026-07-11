@@ -284,7 +284,7 @@ export default function ProductInfo({ product }: ProductInfoProps) {
       </div>
 
       {/* CTA buttons */}
-      <div className="flex gap-3">
+      <div className="flex flex-col sm:flex-row gap-3">
         <Button
           variant={addedToCart ? "secondary" : "luxury"}
           size="lg"
@@ -303,6 +303,7 @@ export default function ProductInfo({ product }: ProductInfoProps) {
           {addedToCart ? "Added to Cart!" : product.inStock ? "Add to Cart" : "Out of Stock"}
         </Button>
 
+        <div className="flex gap-3 sm:shrink-0">
         <button
           onClick={() => {
             toggleItem(product);
@@ -330,10 +331,11 @@ export default function ProductInfo({ product }: ProductInfoProps) {
         >
           <Share2 className="w-5 h-5" />
         </button>
+        </div>
       </div>
 
       {/* Trust badges */}
-      <div className="grid grid-cols-3 gap-3 pt-2">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
         {[
           {
             icon: Truck,

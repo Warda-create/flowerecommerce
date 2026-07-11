@@ -90,7 +90,7 @@ export default function AddressesPage() {
   if (!user) return null;
 
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <>
       <Breadcrumb
         items={[
           { label: "Account", href: "/account/profile" },
@@ -99,7 +99,7 @@ export default function AddressesPage() {
         className="mb-6"
       />
 
-      <div className="flex items-center justify-between mb-8">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between mb-8">
         <div>
           <h1 className="font-display text-3xl font-bold text-sage-900">
             Saved Addresses
@@ -112,6 +112,7 @@ export default function AddressesPage() {
           variant="primary"
           onClick={openAdd}
           leftIcon={<Plus className="w-4 h-4" />}
+          className="shrink-0"
         >
           Add Address
         </Button>
@@ -145,16 +146,16 @@ export default function AddressesPage() {
       >
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4" noValidate>
           <Input label="Label" placeholder="Home, Work, etc." error={errors.label?.message} {...register("label")} required />
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <Input label="First Name" error={errors.firstName?.message} {...register("firstName")} required />
             <Input label="Last Name" error={errors.lastName?.message} {...register("lastName")} required />
           </div>
           <Input label="Street Address" error={errors.street?.message} {...register("street")} required />
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <Input label="City" error={errors.city?.message} {...register("city")} required />
             <Select label="State" options={US_STATES} placeholder="Select" error={errors.state?.message} {...register("state")} required />
           </div>
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <Input label="ZIP Code" error={errors.zipCode?.message} {...register("zipCode")} required />
             <Input label="Phone" type="tel" error={errors.phone?.message} {...register("phone")} required />
           </div>
@@ -168,6 +169,6 @@ export default function AddressesPage() {
           </div>
         </form>
       </Modal>
-    </div>
+    </>
   );
 }

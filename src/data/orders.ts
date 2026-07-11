@@ -1,6 +1,58 @@
 // src/data/orders.ts
-import { Order } from "@/types";
+import { Order, OrderStatus, TrackingEvent } from "@/types";
 import { products } from "./products";
+
+const TRACKING_STEPS: {
+  status: OrderStatus;
+  title: string;
+  description: string;
+}[] = [
+  {
+    status: "confirmed",
+    title: "Order Confirmed",
+    description:
+      "Your order has been received and confirmed. Our florists are reviewing your arrangement.",
+  },
+  {
+    status: "preparing",
+    title: "Arrangement in Progress",
+    description:
+      "Our expert florists have begun creating your beautiful arrangement with hand-selected fresh blooms.",
+  },
+  {
+    status: "out_for_delivery",
+    title: "Out for Delivery",
+    description:
+      "Your arrangement has been carefully packaged and is on its way to the delivery address.",
+  },
+  {
+    status: "delivered",
+    title: "Delivered",
+    description:
+      "Your beautiful flowers have been delivered. We hope they bring joy to the recipient!",
+  },
+];
+
+export function getTrackingEventsForOrder(order: Order): TrackingEvent[] {
+  const statusOrder = TRACKING_STEPS.map((s) => s.status);
+  const currentIndex = statusOrder.indexOf(order.status);
+  const activeIndex = currentIndex === -1 ? 0 : currentIndex;
+
+  return TRACKING_STEPS.map((step, index) => ({
+    id: `${order.id}-${step.status}`,
+    status: step.status,
+    title: step.title,
+    description: step.description,
+    timestamp:
+      index <= activeIndex
+        ? index === 0
+          ? order.createdAt
+          : order.updatedAt
+        : "",
+    completed: index < activeIndex,
+    current: index === activeIndex,
+  }));
+}
 
 export const sampleOrders: Order[] = [
   {

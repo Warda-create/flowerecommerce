@@ -196,7 +196,7 @@ export default function MobileMenu({ isOpen, onClose, links }: MobileMenuProps) 
                   )}
                 </Link>
                 <Link
-                  href="/track"
+                  href="/order-tracking"
                   onClick={onClose}
                   className="flex items-center gap-2 px-3 py-2.5 rounded-xl border border-cream-200 text-sage-600 text-sm font-body hover:border-blush-300 hover:text-blush-600 transition-colors"
                 >

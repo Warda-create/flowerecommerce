@@ -178,8 +178,8 @@ export default function ProductCard({ product, className, priority }: ProductCar
           </div>
 
           {/* Price + CTA */}
-          <div className="flex items-center justify-between gap-2">
-            <div className="flex items-baseline gap-1.5">
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <div className="flex items-baseline gap-1.5 min-w-0">
               <span className="font-display font-semibold text-base text-sage-900">
                 {formatPrice(product.price)}
               </span>
@@ -194,7 +194,7 @@ export default function ProductCard({ product, className, priority }: ProductCar
               onClick={handleAddToCart}
               disabled={!product.inStock}
               className={cn(
-                "flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-body font-semibold transition-all",
+                "flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-body font-semibold transition-all shrink-0",
                 inCart
                   ? "bg-sage-100 text-sage-700"
                   : "bg-blush-600 text-white hover:bg-blush-700 active:bg-blush-800",

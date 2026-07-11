@@ -58,8 +58,8 @@ export default function OrderCard({ order }: OrderCardProps) {
   return (
     <div className="overflow-hidden rounded-2xl border border-cream-100 bg-white shadow-soft">
       {/* Header */}
-      <div className="flex items-center justify-between border-b border-cream-100 bg-cream-50 px-5 py-4">
-        <div>
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between border-b border-cream-100 bg-cream-50 px-5 py-4">
+        <div className="min-w-0">
           <div className="mb-0.5 flex items-center gap-2">
             <Package className="h-4 w-4 text-sage-400" />
             <span className="font-body text-sm font-semibold text-sage-800">
@@ -72,7 +72,7 @@ export default function OrderCard({ order }: OrderCardProps) {
           </p>
         </div>
 
-        <Badge variant={config.variant} dot dotColor={config.dot}>
+        <Badge variant={config.variant} dot dotColor={config.dot} className="shrink-0 self-start sm:self-auto">
           {config.label}
         </Badge>
       </div>
@@ -159,7 +159,7 @@ export default function OrderCard({ order }: OrderCardProps) {
       </div>
 
       {/* Footer */}
-      <div className="flex items-center justify-between border-t border-cream-100 bg-cream-50/50 px-5 py-3">
+      <div className="flex flex-col-reverse gap-3 sm:flex-row sm:items-center sm:justify-between border-t border-cream-100 bg-cream-50/50 px-5 py-3">
         <div>
           {order.status === "delivered" && (
             <button
@@ -172,7 +172,7 @@ export default function OrderCard({ order }: OrderCardProps) {
           )}
         </div>
 
-        <Link href={`/track?order=${order.orderNumber}`}>
+        <Link href={`/order-tracking?order=${order.orderNumber}`}>
           <Button
             variant="outline"
             size="sm"

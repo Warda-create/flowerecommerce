@@ -92,7 +92,7 @@ export default function CartItem({ item }: CartItemProps) {
           </AnimatePresence>
 
           {/* Qty + price */}
-          <div className="flex items-center justify-between mt-3">
+          <div className="flex flex-wrap items-center justify-between gap-3 mt-3">
             <QuantitySelector
               value={item.quantity}
               onChange={(qty) => updateQuantity(item.id, qty)}

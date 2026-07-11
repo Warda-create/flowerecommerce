@@ -98,15 +98,15 @@ function ShopContent() {
         {/* Main content */}
         <div className="flex-1 min-w-0">
           {/* Toolbar */}
-          <div className="flex items-center gap-3 mb-6">
+          <div className="flex flex-wrap items-center gap-3 mb-6">
             <button
               onClick={() => setShowMobileFilters(true)}
-              className="lg:hidden flex items-center gap-2 px-4 py-2.5 rounded-xl border border-cream-200 text-sm font-body text-sage-700 hover:border-blush-300 transition-all"
+              className="lg:hidden flex items-center gap-2 px-4 py-2.5 rounded-xl border border-cream-200 text-sm font-body text-sage-700 hover:border-blush-300 transition-all shrink-0"
             >
               <SlidersHorizontal className="w-4 h-4" />
               Filters
             </button>
-            <div className="ml-auto">
+            <div className="ml-auto min-w-0">
               <SortDropdown value={sortBy} onChange={setSortBy} />
             </div>
           </div>

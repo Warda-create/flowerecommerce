@@ -109,7 +109,7 @@ export default function Header() {
               </div>
               <div className="flex items-center gap-4">
                 <Link
-                  href="/track"
+                  href="/order-tracking"
                   className="hover:text-blush-600 transition-colors"
                 >
                   Track Order

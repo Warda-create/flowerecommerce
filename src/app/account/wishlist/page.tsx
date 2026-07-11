@@ -20,7 +20,7 @@ export default function WishlistPage() {
   if (!isAuthenticated) return null;
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <>
       <Breadcrumb
         items={[
           { label: "Account", href: "/account/profile" },
@@ -30,7 +30,7 @@ export default function WishlistPage() {
       />
 
       <div className="flex items-center gap-3 mb-8">
-        <Heart className="w-6 h-6 text-blush-500 fill-blush-500" />
+        <Heart className="w-6 h-6 text-blush-500 fill-blush-500 shrink-0" />
         <div>
           <h1 className="font-display text-3xl font-bold text-sage-900">
             My Wishlist
@@ -42,6 +42,6 @@ export default function WishlistPage() {
       </div>
 
       <WishlistGrid />
-    </div>
+    </>
   );
 }

@@ -15,7 +15,7 @@ export default function CartPage() {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <Breadcrumb items={[{ label: "Cart" }]} className="mb-6" />
 
-      <div className="flex items-center justify-between mb-8">
+      <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between mb-8">
         <div>
           <h1 className="font-display text-3xl font-bold text-sage-900">
             Your Cart

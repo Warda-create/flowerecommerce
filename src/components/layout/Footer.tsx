@@ -43,7 +43,7 @@ const footerLinks = {
       { label: "FAQs", href: "/contact" },
       { label: "Delivery Information", href: "/contact" },
       { label: "Care Instructions", href: "/contact" },
-      { label: "Track Your Order", href: "/track" },
+      { label: "Track Your Order", href: "/order-tracking" },
       { label: "Returns Policy", href: "/contact" },
       { label: "Contact Us", href: "/contact" },
     ],

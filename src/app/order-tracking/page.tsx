@@ -3,34 +3,29 @@
 import { useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { Search, Package } from "lucide-react";
-import { trackingEvents, sampleOrders } from "@/data/orders";
+import { sampleOrders, getTrackingEventsForOrder } from "@/data/orders";
+import { useOrderStore } from "@/store/orderStore";
 import TrackingTimeline from "@/components/tracking/TrackingTimeline";
 import Breadcrumb from "@/components/common/Breadcrumb";
 import { formatDate, formatPrice } from "@/lib/utils";
 import Badge from "@/components/common/Badge";
+import { ORDER_STATUS_LABELS } from "@/lib/constants";
 
 function TrackingContent() {
   const searchParams = useSearchParams();
+  const getOrderByNumber = useOrderStore((s) => s.getOrderByNumber);
+  const initialOrder = searchParams.get("order")
+    ? getOrderByNumber(searchParams.get("order")!)
+    : null;
   const [orderNumber, setOrderNumber] = useState(searchParams.get("order") || "");
   const [searched, setSearched] = useState(!!searchParams.get("order"));
-  const [order, setOrder] = useState(
-    searchParams.get("order") ? sampleOrders[1] : null
-  );
+  const [order, setOrder] = useState(initialOrder);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (!orderNumber.trim()) return;
     setSearched(true);
-    setOrder(sampleOrders[1]);
-  };
-
-  const statusLabels: Record<string, string> = {
-    pending: "Pending",
-    confirmed: "Confirmed",
-    preparing: "Preparing",
-    out_for_delivery: "Out for Delivery",
-    delivered: "Delivered",
-    cancelled: "Cancelled",
+    setOrder(getOrderByNumber(orderNumber) || null);
   };
 
   return (
@@ -47,9 +42,11 @@ function TrackingContent() {
         </p>
       </div>
 
-      {/* Search form */}
-      <form onSubmit={handleSearch} className="flex gap-3 mb-10 max-w-lg mx-auto">
-        <div className="flex-1 relative">
+      <form
+        onSubmit={handleSearch}
+        className="flex flex-col sm:flex-row gap-3 mb-10 max-w-lg mx-auto"
+      >
+        <div className="flex-1 relative min-w-0">
           <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-sage-400 pointer-events-none" />
           <input
             type="text"
@@ -61,42 +58,43 @@ function TrackingContent() {
         </div>
         <button
           type="submit"
-          className="px-5 py-3 bg-blush-600 text-white rounded-xl font-body font-semibold text-sm hover:bg-blush-700 transition-colors"
+          className="px-5 py-3 bg-blush-600 text-white rounded-xl font-body font-semibold text-sm hover:bg-blush-700 transition-colors shrink-0"
         >
           Track
         </button>
       </form>
 
-      {/* Demo hint */}
       <div className="text-center mb-8">
         <button
           onClick={() => {
-            setOrderNumber("FS-MN4Q7Y-CD34");
+            const demoNumber = sampleOrders[1].orderNumber;
+            setOrderNumber(demoNumber);
             setSearched(true);
-            setOrder(sampleOrders[1]);
+            setOrder(getOrderByNumber(demoNumber) || null);
           }}
           className="font-body text-xs text-blush-600 hover:underline"
         >
-          Try a demo order: FS-MN4Q7Y-CD34
+          Try a demo order: {sampleOrders[1].orderNumber}
         </button>
       </div>
 
-      {/* Results */}
       {searched && order && (
         <div className="space-y-6">
-          {/* Order info */}
           <div className="bg-white rounded-3xl shadow-soft border border-cream-100 overflow-hidden">
-            <div className="px-6 py-5 border-b border-cream-100 bg-cream-50 flex items-center justify-between">
-              <div>
+            <div className="px-6 py-5 border-b border-cream-100 bg-cream-50 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+              <div className="min-w-0">
                 <p className="font-body text-xs text-sage-500 mb-0.5">Order Number</p>
-                <p className="font-display font-bold text-sage-900">{order.orderNumber}</p>
+                <p className="font-display font-bold text-sage-900 break-all">
+                  {order.orderNumber}
+                </p>
               </div>
               <Badge
                 variant={order.status === "delivered" ? "success" : "info"}
                 dot
                 dotColor={order.status === "delivered" ? "bg-green-500" : "bg-blue-500"}
+                className="shrink-0 self-start sm:self-auto"
               >
-                {statusLabels[order.status]}
+                {ORDER_STATUS_LABELS[order.status] || order.status}
               </Badge>
             </div>
 
@@ -129,13 +127,12 @@ function TrackingContent() {
             </div>
           </div>
 
-          {/* Timeline */}
           <div className="bg-white rounded-3xl shadow-soft border border-cream-100 p-6">
             <h2 className="font-display text-lg font-semibold text-sage-900 mb-6">
               Delivery Timeline
             </h2>
             <TrackingTimeline
-              events={trackingEvents}
+              events={getTrackingEventsForOrder(order)}
               currentStatus={order.status}
             />
           </div>

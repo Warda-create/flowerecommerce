@@ -52,7 +52,7 @@ export default function TrackingTimeline({ events, currentStatus }: TrackingTime
 
             {/* Content */}
             <div className="flex-1 pb-6">
-              <div className="flex items-start justify-between gap-2">
+              <div className="flex flex-col gap-1 sm:flex-row sm:items-start sm:justify-between sm:gap-2">
                 <div>
                   <p
                     className={cn(

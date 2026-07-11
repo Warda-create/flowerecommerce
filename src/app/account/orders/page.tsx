@@ -5,23 +5,26 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Package } from "lucide-react";
 import { useAuthStore } from "@/store/authStore";
-import { sampleOrders } from "@/data/orders";
+import { useOrderStore } from "@/store/orderStore";
 import OrderCard from "@/components/account/OrderCard";
 import EmptyState from "@/components/common/EmptyState";
 import Breadcrumb from "@/components/common/Breadcrumb";
 
 export default function OrdersPage() {
-  const { isAuthenticated } = useAuthStore();
+  const { isAuthenticated, user } = useAuthStore();
+  const getOrdersForUser = useOrderStore((s) => s.getOrdersForUser);
   const router = useRouter();
 
   useEffect(() => {
     if (!isAuthenticated) router.push("/account/login");
   }, [isAuthenticated, router]);
 
-  if (!isAuthenticated) return null;
+  if (!isAuthenticated || !user) return null;
+
+  const orders = getOrdersForUser(user.id);
 
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <>
       <Breadcrumb
         items={[
           { label: "Account", href: "/account/profile" },
@@ -30,21 +33,24 @@ export default function OrdersPage() {
         className="mb-6"
       />
 
-      <div className="flex items-center justify-between mb-8">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between mb-8">
         <div>
           <h1 className="font-display text-3xl font-bold text-sage-900">
             My Orders
           </h1>
           <p className="font-body text-sage-500 mt-1">
-            {sampleOrders.length} order{sampleOrders.length !== 1 ? "s" : ""} placed
+            {orders.length} order{orders.length !== 1 ? "s" : ""} placed
           </p>
         </div>
-        <Link href="/shop" className="font-body text-sm text-blush-600 hover:text-blush-700 font-medium">
+        <Link
+          href="/shop"
+          className="font-body text-sm text-blush-600 hover:text-blush-700 font-medium shrink-0"
+        >
           Shop Again →
         </Link>
       </div>
 
-      {sampleOrders.length === 0 ? (
+      {orders.length === 0 ? (
         <EmptyState
           icon={<Package className="w-10 h-10" />}
           title="No orders yet"
@@ -53,11 +59,11 @@ export default function OrdersPage() {
         />
       ) : (
         <div className="space-y-4">
-          {sampleOrders.map((order) => (
+          {orders.map((order) => (
             <OrderCard key={order.id} order={order} />
           ))}
         </div>
       )}
-    </div>
+    </>
   );
 }
